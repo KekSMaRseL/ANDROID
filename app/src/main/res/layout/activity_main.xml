@@ -1,62 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.MainActivity">
+    tools:context=".MainActivity">
+
+
 
     <TextView
-        android:id="@+id/theText"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello world!"
-        android:textSize="30dp" />
-
-
-    <Button
-        android:id="@+id/theButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:text="@string/button_message" />
+        android:text="Enter your email address:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/theEditText"
+        android:id="@+id/editTextText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Type email here:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:text="Hello There" />
+        android:text="Type your password:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
 
-    <CheckBox
-        android:id="@+id/myCheckbox"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Check this out" />
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <Switch
-        android:id="@+id/mySwitch"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="I'm a switch" />
-
-    <RadioButton
-        android:id="@+id/myRadioButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Radio Buttons" />
-
-    <ImageView
-        android:id="@+id/myImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logo_algonquin" />
-
-    <ImageButton
-        android:id="@+id/myImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logo_algonquin" />
+        android:text="LOGIN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
