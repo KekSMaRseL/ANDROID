@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"algonquin.cst2335.android.databinding","l":"ActivityMainBinding"},{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"algonquin.cst2335.android.ui","l":"MainActivity"}];updateSearchResults();
