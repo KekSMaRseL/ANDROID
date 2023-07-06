@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"algonquin.cst2335.android.databinding"},{"l":"algonquin.cst2335.android.ui"},{"l":"All Packages","u":"allpackages-index.html"}];updateSearchResults();
