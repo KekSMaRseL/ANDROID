@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="hello_message">Hello World!</string>
-    <string name="button_message">Button</string>
+    <string name="button_message">LOGIN</string>
+    <string name="type_your_password" translatable="false">Type your Password:</string>
+    <string name="type_here" translatable="false">Type here</string>
+    <string name="time_goes_here" translatable="false">Time goes here</string>
+    <string name="message_goes_here" translatable="false">Message goes here</string>
 
 </resources>
