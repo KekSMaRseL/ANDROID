@@ -13,10 +13,13 @@ import java.util.ArrayList;
 import algonquin.cst2335.android.R;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyRowHolder> {
-    private ArrayList<ChatMessage> messages;
 
-    public ChatAdapter(ArrayList<ChatMessage> messages) {
+    private ArrayList<ChatMessage> messages;
+    private ItemClickListener itemClickListener;
+
+    public ChatAdapter(ArrayList<ChatMessage> messages, ItemClickListener itemClickListener) {
         this.messages = messages;
+        this.itemClickListener = itemClickListener;
     }
 
     @NonNull
@@ -37,6 +40,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyRowHolder> {
         ChatMessage chatMessage = messages.get(position);
         holder.messageText.setText(chatMessage.getMessage());
         holder.timeText.setText(chatMessage.getTimeSent());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListener.onItemClick(position);
+            }
+        });
     }
 
     @Override
@@ -52,6 +62,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyRowHolder> {
         } else {
             return 1;
         }
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(int position);
     }
 
     public static class MyRowHolder extends RecyclerView.ViewHolder {
