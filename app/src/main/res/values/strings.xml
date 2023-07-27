@@ -5,5 +5,6 @@
     <string name="type_here" translatable="false">Type here</string>
     <string name="time_goes_here" translatable="false">Time goes here</string>
     <string name="message_goes_here" translatable="false">Message goes here</string>
-
+    <string name="delete" translatable="false">Delete</string>
+    <string name="about" translatable="false">About</string>
 </resources>

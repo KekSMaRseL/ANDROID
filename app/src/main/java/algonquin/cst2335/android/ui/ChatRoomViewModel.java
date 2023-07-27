@@ -10,5 +10,5 @@ import algonquin.cst2335.android.ui.ChatMessage;
 public class ChatRoomViewModel extends ViewModel {
     public MutableLiveData<ArrayList<ChatMessage>> theWords = new MutableLiveData<>(new ArrayList<>());
     public MutableLiveData<ChatMessage> selectedMessage = new MutableLiveData<>();
-
+    public MutableLiveData<ChatMessage> messageToDelete = new MutableLiveData< >();
 }

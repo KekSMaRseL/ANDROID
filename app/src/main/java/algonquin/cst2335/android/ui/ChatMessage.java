@@ -10,34 +10,22 @@ public class ChatMessage {
     @ColumnInfo(name="id")
     public long id;
 
-    // Other fields and methods...
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-
-    @ColumnInfo(name = "message")
+    @ColumnInfo(name="Message")
     String message;
 
-    @ColumnInfo(name = "timeSent")
+    @ColumnInfo(name="TimeSent")
     String timeSent;
 
-    @ColumnInfo(name = "isSentButton")
-    int isSentButton;
-
-
-    // Placeholder fields for message selection status
-    boolean selected;
+    @ColumnInfo(name="IsSendButton")
+    int isSendButton;
 
     public ChatMessage(String message, String timeSent, int type) {
         this.message = message;
         this.timeSent = timeSent;
-        this.isSentButton = type;
+        this.isSendButton = type;
     }
 
-    public ChatMessage() {
-    }
+    public ChatMessage() {}
 
     public String getMessage() {
         return message;
@@ -47,19 +35,7 @@ public class ChatMessage {
         return timeSent;
     }
 
-    public int getIsSentButton() {
-        return isSentButton;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
+    public int isSentButton() {
+        return isSendButton;
     }
 }
