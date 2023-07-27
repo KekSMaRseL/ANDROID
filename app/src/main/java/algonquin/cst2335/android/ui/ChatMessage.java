@@ -4,26 +4,33 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "chat_messages")
+@Entity
 public class ChatMessage {
+    @PrimaryKey (autoGenerate = true)
+    @ColumnInfo(name="id")
+    public long id;
 
-    @PrimaryKey(autoGenerate = true)
-    public int id;
 
-    @ColumnInfo(name = "message")
-    private String message;
+    @ColumnInfo(name="Message")
+    String message;
 
-    @ColumnInfo(name = "time_sent")
-    private String timeSent;
+    @ColumnInfo(name="TimeSent")
+    String timeSent;
 
-    @ColumnInfo(name = "is_sent_button")
-    private boolean isSentButton;
+    @ColumnInfo(name="IsSendButton")
+    int isSendButton;
 
-    public ChatMessage(String message, String timeSent, boolean isSentButton) {
+
+
+    public ChatMessage(String message, String timeSent, int type) {
         this.message = message;
         this.timeSent = timeSent;
-        this.isSentButton = isSentButton;
+        this.isSendButton = type;
     }
+
+    public ChatMessage()
+    {}
+
 
     public String getMessage() {
         return message;
@@ -33,7 +40,7 @@ public class ChatMessage {
         return timeSent;
     }
 
-    public boolean isSentButton() {
-        return isSentButton;
+    public int isSentButton() {
+        return isSendButton;
     }
 }
