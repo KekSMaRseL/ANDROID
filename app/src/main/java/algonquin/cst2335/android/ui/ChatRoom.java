@@ -9,14 +9,20 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
-
-import android.content.DialogInterface;
+import androidx.room.RoomDatabase;
+import androidx.appcompat.widget.Toolbar;
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +35,7 @@ import algonquin.cst2335.android.R;
 import algonquin.cst2335.android.databinding.ActivityChatRoomBinding;
 import algonquin.cst2335.android.databinding.ReceiveMessageBinding;
 import algonquin.cst2335.android.databinding.SendMessageBinding;
+import algonquin.cst2335.android.ui.ChatRoomViewModel;
 
 public class ChatRoom extends AppCompatActivity {
 
@@ -40,11 +47,58 @@ public class ChatRoom extends AppCompatActivity {
     //ArrayList<ChatMessage> theWords;
 
     private RecyclerView.Adapter myAdapter;
-
+    private ChatMessage selectedMessage = null;
     protected EditText theEditText;
 
     MessageDatabase myDB;
     ChatMessageDAO myDAO;
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_chat_room, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+
+        if (id == R.id.action_delete) {
+            if (selectedMessage != null) {
+                new AlertDialog.Builder(ChatRoom.this)
+                        .setTitle("Delete")
+                        .setMessage("Are you sure you want to delete the selected chat message?")
+                        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                            Executor thread = Executors.newSingleThreadExecutor();
+                            thread.execute(() -> {
+                                myDAO.deleteThisChatMessage(selectedMessage);
+                                theWords.remove(selectedMessage);
+                                runOnUiThread(() -> myAdapter.notifyDataSetChanged());
+                            });
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .show();
+                return true;
+            } else {
+                Toast.makeText(ChatRoom.this, "No chat message is selected to delete.", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        }
+
+        if (id == R.id.action_about) {
+            Toast.makeText(ChatRoom.this, "This is the About Toast Message", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +107,9 @@ public class ChatRoom extends AppCompatActivity {
         binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.mytoolbar);
+        setSupportActionBar(myToolbar);
+        
         myDB = Room.databaseBuilder(getApplicationContext(), MessageDatabase.class, "database-name").build();
         myDAO = myDB.cmDAO(); // the only function in my MessageDatabase
 
@@ -77,6 +134,7 @@ public class ChatRoom extends AppCompatActivity {
                 tx.commit(); //go and do it
             }
         });
+
 
 
         theWords = chatModel.theWords.getValue();
@@ -198,6 +256,9 @@ public class ChatRoom extends AppCompatActivity {
 
             }
 
+
+
+
             @Override
             public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
 
@@ -208,6 +269,15 @@ public class ChatRoom extends AppCompatActivity {
                 holder.messageText.setText(atThisRow.message);
 
                 holder.timeText.setText(atThisRow.timeSent);
+
+                // Add this
+                holder.itemView.setOnClickListener(v -> {
+                    if (selectedMessage == atThisRow) {
+                        selectedMessage = null; // deselect the message
+                    } else {
+                        selectedMessage = atThisRow; // select the message
+                    }
+                });
             }
 
             @Override
@@ -216,53 +286,6 @@ public class ChatRoom extends AppCompatActivity {
             }
 
         });
-
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            getMenuInflater().inflate(R.menu.menu_chat_room, menu);
-            return true;
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int itemId = item.getItemId();
-
-            if (itemId == R.id.menu_delete) {
-                // Show a dialog asking the user if they want to delete the message.
-                new AlertDialog.Builder(this)
-                        .setTitle("Delete Message")
-                        .setMessage("Are you sure you want to delete this message?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Delete the selected message here.
-                                int position = chatModel.getSelectedMessagePosition();
-                                if (position != -1) {
-                                    ChatMessage messageToDelete = theWords.get(position);
-                                    deleteMessage(messageToDelete);
-                                }
-                            }
-                        })
-                        .setNegativeButton("No", null)
-                        .show();
-                return true;
-            } else if (itemId == R.id.menu_about) {
-                // Show an about Toast message.
-                Toast.makeText(this, "About MessageApp: Version 1.0", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-
-            return super.onOptionsItemSelected(item);
-        }
-
-        private void deleteMessage(ChatMessage message) {
-            Executor thread = Executors.newSingleThreadExecutor();
-            thread.execute(() -> {
-                myDAO.deleteThisChatMessage(message);
-                theWords.remove(message);
-                runOnUiThread(() -> myAdapter.notifyDataSetChanged());
-            });
-        }
 
         binding.recycleView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -279,7 +302,7 @@ public class ChatRoom extends AppCompatActivity {
             itemView.setOnClickListener(click -> {
 
                 int index = getAbsoluteAdapterPosition();
-                chatModel.selectedMessage.postValue(theWords.get(index));
+                chatModel.selectedMessage.postValue( theWords.get(index) );
 
 
             });

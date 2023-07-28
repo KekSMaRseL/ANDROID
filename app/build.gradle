@@ -7,7 +7,9 @@ android {
         enabled = true
     }
 
-
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+    }
     namespace 'algonquin.cst2335.android'
     compileSdk 33
 
