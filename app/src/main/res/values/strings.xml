@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="button_message">LOGIN</string>
-    <string name="type_your_password" translatable="false">Type your Password:</string>
-    <string name="type_here" translatable="false">Type here</string>
-    <string name="time_goes_here" translatable="false">Time goes here</string>
-    <string name="message_goes_here" translatable="false">Message goes here</string>
+
+    <string name="city_name">Type city name here</string>
+    <string name="get_forecast">Get Forecast</string>
+    <string name="type_in_the_name_of_a_city">Type in the name of a city:</string>
+    <string name="current_temperature">Current temperature: %1$.2f</string>
+    <string name="maximum_temperature">Maximum temperature: %1$.2f</string>
+    <string name="minimum_temperature">Minimum temperature: %1$.2f</string>
+    <string name="humidity">Humidity: %d%%</string>
+    <string name="description">Description: %s</string>
+    <string name="error_fetch_image">An error occurred while fetching weather image.</string>
+    <string name="error_fetch_data">An error occurred while fetching weather data.</string>
 
 </resources>
